@@ -19,9 +19,9 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_launch);
         spinner = (Spinner) findViewById(R.id.spinner);
 
-        // Array of Months acting as a data pump
-        String[] options = {"ALL", "Fast food", "Indian food", "Mexican food", "Chinese food", "Korean food",
-                "sushi", "Italian food", "Greek food", "coffee", "bubble tea", "sandwiches", "Thai food", "breakfast"};
+        // Array of food type options
+        String[] options = {"All", "Breakfast", "Bubble tea", "Chinese food", "Coffee", "Fast food", "Greek food",
+                "Indian food", "Italian food", "Korean food", "Mexican food", "Sandwiches", "Sushi", "Thai food"};
 
         // Declaring an Adapter and initializing it to the data pump
         ArrayAdapter adapter = new ArrayAdapter(

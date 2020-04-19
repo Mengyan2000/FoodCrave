@@ -57,7 +57,8 @@ public class ResultActivity extends AppCompatActivity {
     }
 
     private boolean checkPermissions(){
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             return true;
         }
         return false;
@@ -90,7 +91,9 @@ public class ResultActivity extends AppCompatActivity {
 
     private void getLastLocation(){
         if (checkPermissions()) {
+            System.out.println("checkPermissions PASSED");
             if (isLocationEnabled()) {
+                System.out.println("isLocationEnabled PASSED");
                 fusedLocationClient.getLastLocation().addOnCompleteListener(
                         new OnCompleteListener<Location>() {
                             @Override
