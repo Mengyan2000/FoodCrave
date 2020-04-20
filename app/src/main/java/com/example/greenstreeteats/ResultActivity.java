@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -15,9 +16,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.net.PlacesClient;
@@ -28,9 +27,9 @@ public class ResultActivity extends AppCompatActivity {
 
     private FusedLocationProviderClient fusedLocationClient;
 
-    private LatLng currentLocation;
-
     private int PERMISSION_ID = 44;
+
+    private Location location;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,10 +47,11 @@ public class ResultActivity extends AppCompatActivity {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         getLastLocation();
-        if (currentLocation != null) {
-            System.out.println("!!!!!!!!! LOCATION IS NOT NULL!!!!!!!!!!");
+
+        if (location != null) {
+            System.out.println("!!!!!!!!! LOCATION LOCATION IS NOT NULL!!!!!!!!!");
         } else {
-            System.out.println("!!!!!!!!! LOCATION IS NULL!!!!!!!!!!");
+            System.out.println("!!!!!!!!! LOCATION LOCATION IS NULL!!!!!!!!!");
         }
 
     }
@@ -89,6 +89,7 @@ public class ResultActivity extends AppCompatActivity {
         );
     }
 
+    @SuppressLint("MissingPermission")
     private void getLastLocation(){
         if (checkPermissions()) {
             System.out.println("checkPermissions PASSED");
@@ -98,9 +99,13 @@ public class ResultActivity extends AppCompatActivity {
                         new OnCompleteListener<Location>() {
                             @Override
                             public void onComplete(@NonNull Task<Location> task) {
-                                Location location = task.getResult();
-                                if (location != null) {
-                                    currentLocation = new LatLng(location.getLatitude(), location.getLongitude());
+                                System.out.println("~~~~~within function~~~~~");
+                                location = task.getResult();
+                                if (location == null) {
+                                    System.out.println("LOCATION IS NULL WITHIN FUNCTION.");
+                                } else {
+                                    System.out.println("location is NOT NULL WITHIN FUNCTION");
+                                    return;
                                 }
                             }
                         }
