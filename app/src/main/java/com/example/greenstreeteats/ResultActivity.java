@@ -12,14 +12,25 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+import java.util.List;
 
 public class ResultActivity extends AppCompatActivity {
 
@@ -31,12 +42,16 @@ public class ResultActivity extends AppCompatActivity {
 
     private Location location;
 
+    private String option;
+
+    private int radius = 800;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
         Intent search = getIntent();
 
+        option = search.getStringExtra("option");
         // Initialize the SDK
         Places.initialize(getApplicationContext(), apiKey);
 
@@ -53,6 +68,7 @@ public class ResultActivity extends AppCompatActivity {
         } else {
             System.out.println("!!!!!!!!! LOCATION LOCATION IS NULL!!!!!!!!!");
         }
+
 
     }
 
@@ -105,10 +121,13 @@ public class ResultActivity extends AppCompatActivity {
                                     System.out.println("LOCATION IS NULL WITHIN FUNCTION.");
                                 } else {
                                     System.out.println("location is NOT NULL WITHIN FUNCTION");
-                                    return;
+                                    System.out.println(location);
+                                    getResult();
                                 }
+
                             }
                         }
+
                 );
             } else {
                 Toast.makeText(this, "Turn on location", Toast.LENGTH_LONG).show();
@@ -118,6 +137,42 @@ public class ResultActivity extends AppCompatActivity {
         } else {
             requestPermissions();
         }
+    }
+
+    private void getResult() {
+
+        final JsonObject[] places = new JsonObject[1];
+
+        System.out.println(option);
+        // ...
+
+        // Instantiate the RequestQueue.
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url ="https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=" + apiKey
+                + "&location=" + location.getLatitude() + ", " + location.getLongitude()+ "&radius=" + radius
+                + "&opennow" + "&type=restaurant";
+
+        // Request a string response from the provided URL.
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Display the first 500 characters of the response string.
+                        JsonParser parse = new JsonParser();
+                        places[0] = (JsonObject) parse.parse(response);
+                        System.out.println(places[0]);
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+        // Add the request to the RequestQueue.
+        queue.add(stringRequest);
+
     }
 
 }
