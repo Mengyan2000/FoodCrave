@@ -27,6 +27,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -148,9 +150,10 @@ public class ResultActivity extends AppCompatActivity {
 
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=" + apiKey
+        String url ="https://maps.googleapis.com/maps/api/place/textsearch/json?key=" + apiKey
+                + "&query=" + option
                 + "&location=" + location.getLatitude() + ", " + location.getLongitude()+ "&radius=" + radius
-                + "&opennow" + "&type=restaurant";
+                + "&opennow";
 
         // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
@@ -161,6 +164,11 @@ public class ResultActivity extends AppCompatActivity {
                         JsonParser parse = new JsonParser();
                         places[0] = (JsonObject) parse.parse(response);
                         System.out.println(places[0]);
+                        JsonArray results = (JsonArray) places[0].get("results");
+                        for (JsonElement result : results) {
+                            String name = ((JsonObject) result).get("name").getAsString();
+                            System.out.println(name);
+                        }
 
                     }
                 }, new Response.ErrorListener() {
