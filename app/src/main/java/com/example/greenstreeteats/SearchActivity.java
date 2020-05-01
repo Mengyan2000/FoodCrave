@@ -22,7 +22,7 @@ public class SearchActivity extends AppCompatActivity {
 
         // Array of food type options
         String[] options = {"All", "Breakfast", "Bubble tea", "Chinese food", "Coffee", "Fast food", "Greek food",
-                "Indian food", "Italian food", "Korean food", "Mexican food", "Sandwiches", "Sushi", "Thai food"};
+                "Ice cream", "Indian food", "Italian food", "Korean food", "Mexican food", "Sandwiches", "Sushi", "Thai food"};
 
         // Declaring an Adapter and initializing it to the data pump
         ArrayAdapter adapter = new ArrayAdapter(

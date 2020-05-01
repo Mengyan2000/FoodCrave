@@ -62,13 +62,14 @@ public class ResultActivity extends AppCompatActivity {
 
         getLastLocation();
 
-        if (location != null) {
-            System.out.println("!!!!!!!!! LOCATION LOCATION IS NOT NULL!!!!!!!!!");
-        } else {
-            System.out.println("!!!!!!!!! LOCATION LOCATION IS NULL!!!!!!!!!");
-        }
+    }
 
-
+    @Override
+    public void onBackPressed() {
+        System.out.println("BACK BUTTON PRESSED");
+        Intent back = new Intent(ResultActivity.this, SearchActivity.class);
+        startActivityForResult(back, 456);
+        finish();
     }
 
     private boolean checkPermissions(){
@@ -114,12 +115,11 @@ public class ResultActivity extends AppCompatActivity {
                         new OnCompleteListener<Location>() {
                             @Override
                             public void onComplete(@NonNull Task<Location> task) {
-                                System.out.println("~~~~~within function~~~~~");
                                 location = task.getResult();
                                 if (location == null) {
-                                    System.out.println("LOCATION IS NULL WITHIN FUNCTION.");
+                                    System.out.println("LOCATION IS NULL.");
                                 } else {
-                                    System.out.println("location is NOT NULL WITHIN FUNCTION");
+                                    System.out.println("location retrieved.");
                                     System.out.println(location);
                                     getResult();
                                 }
@@ -142,22 +142,35 @@ public class ResultActivity extends AppCompatActivity {
 
         final JsonObject[] places = new JsonObject[1];
 
-        System.out.println(option);
-        // ...
+        System.out.println("input food type: " + option);
+        // Reformat option string, if necessary
+        option = option.trim();
+        String[] splitOption = option.split(" ");
+        if (splitOption.length > 1) {
+            option = splitOption[0];
+            for (int i = 1; i < splitOption.length; i++) {
+                option = option + "+" + splitOption[i];
+            }
+        } else if (option.equals("All")) {
+            option = "restaurant";
+        }
+        System.out.println("reformatted food type: " + option);
 
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
         String url ="https://maps.googleapis.com/maps/api/place/textsearch/json?key=" + apiKey
                 + "&query=" + option
-                + "&location=" + location.getLatitude() + ", " + location.getLongitude()+ "&radius=" + radius
+                + "&location=" + location.getLatitude() + "," + location.getLongitude()
+                + "&radius=" + radius
                 + "&opennow";
+
+        System.out.println("URL: " + url);
 
         // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        // Display the first 500 characters of the response string.
                         JsonParser parse = new JsonParser();
                         places[0] = (JsonObject) parse.parse(response);
                         System.out.println(places[0]);
@@ -171,7 +184,7 @@ public class ResultActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                System.out.println("error fetching results from Places search.");
             }
         });
 
