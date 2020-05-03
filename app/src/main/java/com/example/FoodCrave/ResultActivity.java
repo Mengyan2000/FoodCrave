@@ -1,4 +1,4 @@
-package com.example.greenstreeteats;
+package com.example.FoodCrave;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;

@@ -1,4 +1,4 @@
-package com.example.greenstreeteats;
+package com.example.FoodCrave;
 
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package com.example.greenstreeteats;
+package com.example.FoodCrave;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,7 +9,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 
 public class SearchActivity extends AppCompatActivity {
     Spinner spinner;
