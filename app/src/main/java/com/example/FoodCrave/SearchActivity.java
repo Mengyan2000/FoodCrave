@@ -50,7 +50,7 @@ public class SearchActivity extends AppCompatActivity {
 
     private String option;
 
-    private int radius = 800;
+    private int radius = 800; // meters
 
     private int PERMISSION_ID = 44;
 
@@ -210,7 +210,6 @@ public class SearchActivity extends AppCompatActivity {
                             String name = ((JsonObject) result).get("name").getAsString();
 //                            System.out.println(name);
                             resultNames.add(name);
-                            System.out.println("ITERABLE SIZE: " + resultNames.size());
                         }
                         // Launch the result activity
                         launchResultActivity();
