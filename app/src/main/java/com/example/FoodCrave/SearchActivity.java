@@ -56,21 +56,6 @@ public class SearchActivity extends AppCompatActivity {
 
     private ArrayList<String> resultNames = new ArrayList<>();
 
-    class getResultThread implements Runnable {
-        @Override
-        public void run() {
-            getSearchResult();
-            System.out.println("END OF SEARCH");
-        }
-    }
-
-    class launchResultActivityThread implements Runnable {
-        @Override
-        public void run() {
-            launchResultActivity();
-        }
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,33 +101,11 @@ public class SearchActivity extends AppCompatActivity {
         Button search = findViewById(R.id.Search);
         search.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
-                Thread search = new Thread(new getResultThread(), "search");
-                Thread launch = new Thread(new launchResultActivityThread(), "launch");
-
-                search.start();
-
-                try {
-                    search.join();
-                    System.out.println("SEARCH JOINED");
-                } catch (InterruptedException e){
-                    System.out.println("InterruptionException");
-                }
-
-                launch.start();
-
-                System.out.println("ONCLICK SIZE: " + resultNames.size());
+                // When search  button is pressed, load the API search results, then launch the result activity
+                getSearchResult();
             }
         });
 
-    }
-
-    private void launchResultActivity() {
-        Intent result = new Intent(SearchActivity.this, ResultActivity.class);
-        result.putExtra("option", option);
-        result.putStringArrayListExtra("result names", resultNames);
-        startActivityForResult(result, 123);
-        finish();
     }
 
     private boolean checkPermissions(){
@@ -249,6 +212,8 @@ public class SearchActivity extends AppCompatActivity {
                             resultNames.add(name);
                             System.out.println("ITERABLE SIZE: " + resultNames.size());
                         }
+                        // Launch the result activity
+                        launchResultActivity();
 
                     }
                 }, new Response.ErrorListener() {
@@ -262,6 +227,15 @@ public class SearchActivity extends AppCompatActivity {
         queue.add(stringRequest);
 
     }
+
+    private void launchResultActivity() {
+        Intent result = new Intent(SearchActivity.this, ResultActivity.class);
+        result.putExtra("option", option);
+        result.putStringArrayListExtra("result names", resultNames);
+        startActivityForResult(result, 123);
+        finish();
+    }
+
 
 }
 

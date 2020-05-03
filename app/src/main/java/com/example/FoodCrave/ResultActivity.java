@@ -56,12 +56,9 @@ public class ResultActivity extends AppCompatActivity {
         Intent search = getIntent();
 
         resultNames = search.getStringArrayListExtra("result names");
-        if (resultNames == null) {
-            System.out.println("resultNames is null");
-        }
+        System.out.println("IN RESULT ACTIVITY");
         System.out.println("EXTRA SIZE: " + resultNames.size());
         for (int i = 0; i < resultNames.size(); i++) {
-            System.out.println("IN RESULT ACTIVITY");
             System.out.println(resultNames.get(i));
         }
 
