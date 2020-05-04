@@ -14,7 +14,7 @@ public class ResultActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_result);
+
         Intent search = getIntent();
 
         resultNames = search.getStringArrayListExtra("result names");
@@ -23,6 +23,8 @@ public class ResultActivity extends AppCompatActivity {
         for (int i = 0; i < resultNames.size(); i++) {
             System.out.println(resultNames.get(i));
         }
+        setContentView(R.layout.activity_result);
+
     }
 
     // When back button is pressed, go back to SearchActivity

@@ -68,4 +68,94 @@
 
     </LinearLayout>
 
+    <TableLayout
+        android:id="@+id/Restaurants"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/linearLayout2">
+
+        <TableRow
+            android:layout_weight="0.1"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            />
+
+        <TableRow
+            android:layout_weight="0.1"
+            android:layout_height="0dp"
+            android:layout_width="wrap_content"
+            android:text="Address2"
+            android:textColor="#2840C4"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
+
+        <TableRow
+            android:layout_weight="0.1"
+            android:layout_height="0dp"
+            android:layout_width="wrap_content"
+            android:text="Address3"
+            android:textColor="#2840C4"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
+
+        <TableRow
+            android:layout_weight="0.1"
+            android:layout_height="0dp"
+            android:layout_width="wrap_content"
+            android:text="Address4"
+            android:textColor="#2840C4"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
+
+        <TableRow
+            android:layout_weight="0.1"
+            android:layout_height="0dp"
+            android:layout_width="wrap_content" />
+
+        <TableRow
+            android:layout_weight="0.1"
+            android:layout_height="0dp"
+            android:layout_width="wrap_content" />
+
+        <TableRow
+            android:layout_weight="0.1"
+            android:layout_height="0dp"
+            android:layout_width="wrap_content" />
+
+        <TableRow
+            android:layout_weight="0.1"
+            android:layout_height="0dp"
+            android:layout_width="wrap_content" />
+
+        <TableRow
+            android:layout_weight="0.1"
+            android:layout_height="0dp"
+            android:layout_width="wrap_content" />
+
+        <TableRow
+            android:layout_weight="0.1"
+            android:layout_height="0dp"
+            android:layout_width="wrap_content">
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_weight="0.5"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="TextView" />
+            <TextView
+                android:id="@+id/textView21"
+                android:layout_weight="0.5"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="TextView" />
+        </TableRow>
+    </TableLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
