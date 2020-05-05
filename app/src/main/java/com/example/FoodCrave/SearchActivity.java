@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.View;
@@ -41,6 +40,8 @@ import java.util.ArrayList;
 
 public class SearchActivity extends AppCompatActivity {
     Spinner spinner;
+
+    Spinner radiusSpinner;
 
     private String apiKey = "AIzaSyCJ5SXqmg7Gf8eK6SxfAwY_UhpffzwKAsI";
 
@@ -74,6 +75,31 @@ public class SearchActivity extends AppCompatActivity {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         getLastLocation();
+
+        // Radius spinner setup
+        radiusSpinner = (Spinner) findViewById(R.id.radiusSpinner);
+
+        // Array of radius options (meters)
+        String[] radiusOptions = {"250", "500", "800", "1200", "1600", "2400", "3200"};
+
+        // Declaring an Adapter and initializing it to the data pump
+        ArrayAdapter adapterRadius = new ArrayAdapter(
+                getApplicationContext(),android.R.layout.simple_list_item_1 ,radiusOptions);
+
+        // Setting Adapter to the Spinner
+        radiusSpinner.setAdapter(adapterRadius);
+
+        final String[] thing = new String[1];
+        radiusSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+                thing[0] = (String) parent.getItemAtPosition(pos);
+                radius = Integer.parseInt(thing[0]);
+            }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+        System.out.println("RADIUS: " + radius + " meters");
+
 
         // Spinner setup
         spinner = (Spinner) findViewById(R.id.spinner);
