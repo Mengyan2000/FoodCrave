@@ -20,30 +20,38 @@ public class ResultActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_result);
 
+        // Get intent from SearchActivity
         Intent search = getIntent();
 
+        // Get restaurant names as extra
         resultNames = search.getStringArrayListExtra("result names");
-        System.out.println("IN RESULT ACTIVITY");
-        System.out.println("EXTRA SIZE: " + resultNames.size());
+
+        // Print restaurant names
         for (int i = 0; i < resultNames.size(); i++) {
             System.out.println(resultNames.get(i));
         }
-        setContentView(R.layout.activity_result);
-        //LinearLayout result = findViewById(R.layout.activity_result);
-        LinearLayout restaurant = findViewById(R.id.restaurants_list);
 
+        // Get reference to the LinearLayout that will hold chunks of UI about the restaurants
+        LinearLayout restaurantsList = findViewById(R.id.restaurants_list);
+        restaurantsList.removeAllViews();
+
+        // Add an entry to the LinearLayout for each restaurant
         for (int i = 0; i < resultNames.size(); i++) {
-
+            // Create a chunk of UI for this current restaurant
             String name = resultNames.get(i);
-            View chunk = getLayoutInflater().inflate(R.layout.chunk_restaurant, restaurant, false);
+            View chunk = getLayoutInflater().inflate(R.layout.chunk_restaurant, restaurantsList, false);
 
-            TextView single = chunk.findViewById(R.id.gameOwner);
+            // Display the restaurant name
+            TextView restaurantName = chunk.findViewById(R.id.gameOwner);
+            restaurantName.setText(name);
 
-            single.setText(name);
-            restaurant.addView(chunk);
-            System.out.println(name + "gameOwner");
+            restaurantsList.addView(chunk);
+            System.out.println(name);
         }
+
+//        setContentView(restaurantsList);
 
 
     }
