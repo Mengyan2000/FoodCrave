@@ -2,12 +2,12 @@ package com.example.FoodCrave;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import org.xmlpull.v1.XmlPullParser;
 
 import java.util.ArrayList;
 
@@ -28,11 +28,6 @@ public class ResultActivity extends AppCompatActivity {
         // Get restaurant names as extra
         resultNames = search.getStringArrayListExtra("result names");
 
-        // Print restaurant names
-        for (int i = 0; i < resultNames.size(); i++) {
-            System.out.println(resultNames.get(i));
-        }
-
         // Get reference to the LinearLayout that will hold chunks of UI about the restaurants
         LinearLayout restaurantsList = findViewById(R.id.restaurants_list);
         restaurantsList.removeAllViews();
@@ -44,15 +39,22 @@ public class ResultActivity extends AppCompatActivity {
             View chunk = getLayoutInflater().inflate(R.layout.chunk_restaurant, restaurantsList, false);
 
             // Display the restaurant name
-            TextView restaurantName = chunk.findViewById(R.id.gameOwner);
+            TextView restaurantName = chunk.findViewById(R.id.restaurantName);
             restaurantName.setText(name);
+
+            Button mapButton = chunk.findViewById(R.id.maplink);
+//            mapButton.setOnClickListener(new View.OnClickListener() {
+//                public void onClick(View v) {
+//                    // When map  button is pressed, open Google Maps app
+//                    System.out.println("Maps button pressed");
+//                    Uri directionsUri = Uri.parse("google.navigation:q="+)
+//                    Intent mapIntent = new Intent(Intent.ACTION_VIEW, directionsUri)
+//                }
+//            });
 
             restaurantsList.addView(chunk);
             System.out.println(name);
         }
-
-//        setContentView(restaurantsList);
-
 
     }
 

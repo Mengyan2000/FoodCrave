@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/map"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -12,16 +13,19 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/gameOwner"
+            android:id="@+id/restaurantName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Restaurant" />
+            android:padding="15dp"
+            android:text="Restaurant"
+            android:textSize="18sp" />
 
     </LinearLayout>
 
     <Button
-        android:id="@+id/declineInvite"
+        android:id="@+id/maplink"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Map" />
+        android:text="Map"
+        android:textSize="18sp" />
 </LinearLayout>

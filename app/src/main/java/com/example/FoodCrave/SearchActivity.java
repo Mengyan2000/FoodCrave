@@ -56,6 +56,10 @@ public class SearchActivity extends AppCompatActivity {
 
     private ArrayList<String> resultNames = new ArrayList<>();
 
+    private ArrayList<String> resultLats = new ArrayList<>();
+
+    private ArrayList<String> resultLngs = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -207,9 +211,19 @@ public class SearchActivity extends AppCompatActivity {
                         System.out.println(places[0]);
                         JsonArray results = (JsonArray) places[0].get("results");
                         for (JsonElement result : results) {
+                            // Restaurant name
                             String name = ((JsonObject) result).get("name").getAsString();
-//                            System.out.println(name);
                             resultNames.add(name);
+
+                            // Restaurant location
+                            JsonElement geometry = ((JsonObject) result).get("geometry");
+                            JsonElement restaurantLocation = ((JsonObject) geometry).get("location");
+                            String restaurantLat = (restaurantLocation.getAsJsonObject()).get("lat").getAsString();
+                            String restaurantLng = (restaurantLocation.getAsJsonObject()).get("lng").getAsString();
+                            System.out.println("lat: " + restaurantLat);
+                            System.out.println("lng: " + restaurantLng);
+                            resultLats.add(restaurantLat);
+                            resultLats.add(restaurantLng);
                         }
                         // Launch the result activity
                         launchResultActivity();
@@ -231,6 +245,8 @@ public class SearchActivity extends AppCompatActivity {
         Intent result = new Intent(SearchActivity.this, ResultActivity.class);
         result.putExtra("option", option);
         result.putStringArrayListExtra("result names", resultNames);
+        // THIS IS WHERE I AM
+        
         startActivityForResult(result, 123);
         finish();
     }
