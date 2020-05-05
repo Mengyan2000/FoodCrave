@@ -44,14 +44,14 @@ public class ResultActivity extends AppCompatActivity {
         for (int i = 0; i < resultNames.size(); i++) {
             // Create a chunk of UI for this current restaurant
             String name = resultNames.get(i);
-            View chunk = getLayoutInflater().inflate(R.layout.chunk_restaurant, restaurantsList, false);
+            final View chunk = getLayoutInflater().inflate(R.layout.chunk_restaurant, restaurantsList, false);
 
             // Display the restaurant name
             TextView restaurantName = chunk.findViewById(R.id.restaurantName);
             restaurantName.setText(name);
             Location location = new Location(resultLocation.get(i));
             final double lat = location.getLatitude();
-            final double log = location.getLongitude();
+            final double lng = location.getLongitude();
 
             Button mapButton = chunk.findViewById(R.id.maplink);
             mapButton.setOnClickListener(new View.OnClickListener() {
@@ -59,15 +59,14 @@ public class ResultActivity extends AppCompatActivity {
                     // When map  button is pressed, open Google Maps app
                     System.out.println("Maps button pressed");
 
-                    Uri directionsUri = Uri.parse("google.navigation:q=" + lat + "," + log + "&mode=w");
+                    Uri directionsUri = Uri.parse("google.navigation:q=" + lat + "," + lng + "&mode=w");
                     Intent mapIntent = new Intent(Intent.ACTION_VIEW, directionsUri);
                     mapIntent.setPackage("com.google.android.apps.maps");
                     startActivity(mapIntent);
                 }
-//            });
+            });
 
             restaurantsList.addView(chunk);
-            //System.out.println(name);
         }
 
     }

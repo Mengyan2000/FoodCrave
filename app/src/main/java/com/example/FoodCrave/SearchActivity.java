@@ -58,8 +58,6 @@ public class SearchActivity extends AppCompatActivity {
 
     private ArrayList<Location> resultLocation = new ArrayList<>();
 
-    private ArrayList<String> resultLngs = new ArrayList<>();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -226,8 +224,6 @@ public class SearchActivity extends AppCompatActivity {
                             locations.setLatitude(restaurantLat);
                             locations.setLongitude(restaurantLng);
                             resultLocation.add(locations);
-                            //resultLats.add(restaurantLat);
-                            //resultLats.add(restaurantLng);
                         }
                         // Launch the result activity
                         launchResultActivity();
@@ -250,8 +246,7 @@ public class SearchActivity extends AppCompatActivity {
         result.putExtra("option", option);
         result.putStringArrayListExtra("result names", resultNames);
         result.putParcelableArrayListExtra("location", resultLocation);
-        // THIS IS WHERE I AM
-        
+
         startActivityForResult(result, 123);
         finish();
     }
