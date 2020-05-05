@@ -56,7 +56,7 @@ public class SearchActivity extends AppCompatActivity {
 
     private ArrayList<String> resultNames = new ArrayList<>();
 
-    private ArrayList<String> resultLats = new ArrayList<>();
+    private ArrayList<Location> resultLocation = new ArrayList<>();
 
     private ArrayList<String> resultLngs = new ArrayList<>();
 
@@ -218,12 +218,16 @@ public class SearchActivity extends AppCompatActivity {
                             // Restaurant location
                             JsonElement geometry = ((JsonObject) result).get("geometry");
                             JsonElement restaurantLocation = ((JsonObject) geometry).get("location");
-                            String restaurantLat = (restaurantLocation.getAsJsonObject()).get("lat").getAsString();
-                            String restaurantLng = (restaurantLocation.getAsJsonObject()).get("lng").getAsString();
+                            double restaurantLat = (restaurantLocation.getAsJsonObject()).get("lat").getAsDouble();
+                            double restaurantLng = (restaurantLocation.getAsJsonObject()).get("lng").getAsDouble();
                             System.out.println("lat: " + restaurantLat);
                             System.out.println("lng: " + restaurantLng);
-                            resultLats.add(restaurantLat);
-                            resultLats.add(restaurantLng);
+                            Location locations = new Location("restaurant");
+                            locations.setLatitude(restaurantLat);
+                            locations.setLongitude(restaurantLng);
+                            resultLocation.add(locations);
+                            //resultLats.add(restaurantLat);
+                            //resultLats.add(restaurantLng);
                         }
                         // Launch the result activity
                         launchResultActivity();
@@ -245,6 +249,7 @@ public class SearchActivity extends AppCompatActivity {
         Intent result = new Intent(SearchActivity.this, ResultActivity.class);
         result.putExtra("option", option);
         result.putStringArrayListExtra("result names", resultNames);
+        result.putParcelableArrayListExtra("location", resultLocation);
         // THIS IS WHERE I AM
         
         startActivityForResult(result, 123);
