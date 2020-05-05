@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import org.xmlpull.v1.XmlPullParser;
+
 import java.util.ArrayList;
 
 public class ResultActivity extends AppCompatActivity {
@@ -27,21 +29,23 @@ public class ResultActivity extends AppCompatActivity {
         for (int i = 0; i < resultNames.size(); i++) {
             System.out.println(resultNames.get(i));
         }
-
-
+        setContentView(R.layout.activity_result);
+        //LinearLayout result = findViewById(R.layout.activity_result);
         LinearLayout restaurant = findViewById(R.id.restaurants_list);
 
-
         for (int i = 0; i < resultNames.size(); i++) {
+
             String name = resultNames.get(i);
             View chunk = getLayoutInflater().inflate(R.layout.chunk_restaurant, restaurant, false);
 
             TextView single = chunk.findViewById(R.id.gameOwner);
+
             single.setText(name);
             restaurant.addView(chunk);
+            System.out.println(name + "gameOwner");
         }
 
-        setContentView(R.layout.activity_result);
+
     }
 
     // When back button is pressed, go back to SearchActivity
